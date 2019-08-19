@@ -25,30 +25,3 @@ export default class ColorList extends Vue {
     }
 }
 </script>
-
-<style lang="scss">
-    @import '../scss/common';
-
-    .colors {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin: 0 -($gutter-width/2);
-        width: 100%;
-
-        .color {
-            transition: all .5s;
-            margin: 0 ($gutter-width/2);
-            height: 175px;
-            margin-bottom: $margin-large;
-
-            flex-basis: 20%;
-            max-width: 20%;
-
-            &:hover {
-                transform: translateY(-5px);
-            }
-        }
-    }
-</style>

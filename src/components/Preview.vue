@@ -15,9 +15,7 @@
 
         <div class="code-example" :class="{active: showCodeExample}">
             <button @click="showCodeExample = !showCodeExample">
-                <i :class="`fa fa-arrow-${showCodeExample ? 'down' : 'up'}`"></i>
-
-                code example
+                <i class="fa fa-code"></i>
             </button>
             <pre>{{codeExample}}</pre>
         </div>
@@ -87,7 +85,3 @@ export default class Preview extends Vue {
     }
 }
 </script>
-
-<style lang="scss">
-    @import '../scss/components/preview';
-</style>

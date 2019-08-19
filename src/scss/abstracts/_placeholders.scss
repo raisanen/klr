@@ -1,0 +1,95 @@
+%klrized {
+    &>span {
+        &:first-child {
+            color: $color-border;
+        }
+
+        &:last-child {
+            color: $color-highlight
+        }
+    }
+}
+
+%slide-in-container {
+    @include transition($speed: $speed-medium);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+
+    height: 100vh;
+    width: $container-width;
+
+    max-width: 50vw;
+    
+    transform: translateX(100%);
+
+    background-color: $color-border;
+
+    &.active {
+        transform: translateX(0);
+        box-shadow: -5px 0 5px rgba($color-text, .2);
+        z-index: 12;
+    }
+
+}
+%slide-in-container__button {
+    @include transition($speed: $speed-fast);
+    $button-height: 60px;
+    $button-width:  40px;
+
+    position: absolute;
+    left: 0;
+    width: $button-width;
+    height: $button-height;
+    transform: translate(-100%, -50%);
+
+    border: none;
+    background-color: $color-border;
+    color: $color-background;
+
+    cursor: pointer;
+
+    @for $n from 1 through 4 {
+        &--position-#{$n} {
+            bottom: ($n * ($button-height + $padding-small)) + ($button-height); 
+        }
+    }
+
+    &:hover {
+        width: $button-height;
+    }
+    &:focus {
+        outline: none;
+    }
+}
+
+%slide-in-container__content {
+    position: absolute;
+
+    top: 0;
+    left: $padding-medium;
+    right: $padding-medium;
+    bottom: 0;
+
+    padding: $padding-small $padding-small $padding-medium;
+
+    overflow-y: auto;
+}
+
+%flex-column {
+    @include flex($direction: column);
+}
+%flex-row {
+    @extend %flex-column;
+    flex-direction: row;
+}
+
+
+%flex-container {
+    @extend %flex-column;
+    @include container;
+}
+
+

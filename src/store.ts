@@ -27,7 +27,7 @@ export const defaultState: KlrState = {
   fonts: [
     new Font({ family: 'Quicksand', size: '56px', weight: 'bold',  text: 'Heading - level 1' }),
     new Font({ family: 'Quicksand', size: '32px', weight: 'bold',  text: 'Heading - level 2' }),
-    new Font({ family: 'DM Serif', size: '24px', text: 'Paragraph text'})
+    new Font({ family: 'Bitter', size: '24px', text: 'Paragraph text'})
   ],
   colors: [Color.fromString('#222'), Color.fromString('#abc'), Color.fromString('#0af')],
   userKey: null,
@@ -112,7 +112,6 @@ export default new Vuex.Store<KlrState>({
       state.fonts = [...(payload.fonts || []).map((f) => new Font(f))];
       state.colors = [...(payload.colors || []).map((c) => new Color(c))];
     },
-
     loading(state, isLoading: boolean) {
       state.loading = isLoading;
     }
@@ -150,13 +149,13 @@ export default new Vuex.Store<KlrState>({
       const name = state.getters.userKey;
       this.commit('loading', true);
       const dto = await dataService.load<ConfigDto>(name);
-      this.commit('udpate', dto);
+      this.commit('load', dto);
+      this.commit('resetActiveColors');
       this.commit('loading', false);
     },
     async loadFonts(state) {
       this.commit('loading', true);
       await fontService.load(...state.getters.fonts);
-      this.commit('fonts')
       this.commit('loading', false);
     }
   },

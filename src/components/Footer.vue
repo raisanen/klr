@@ -14,6 +14,3 @@ import Component from 'vue-class-component';
 export default class Footer extends Vue { }
 </script>
 
-<style lang="scss">
-    @import '../scss/components/footer';
-</style>

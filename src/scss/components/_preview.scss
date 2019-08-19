@@ -1,5 +1,3 @@
-@import '../common';
-
 main {
     @extend %flex-container;
     margin-top: $margin-medium;
@@ -106,67 +104,25 @@ main {
             }
         }
     }
+}
+.code-example {
+    @extend %slide-in-container;
 
-    .code-example {
-        width: $container-width;
-        bottom: 0;
-        height: 2.5rem;
-        z-index: 20;
+    button, pre {            
+        font-family: $font-family-mono;
+        font-size: 1.1rem;
+    }
+    button {
+        @extend %slide-in-container__button;
+        @extend %slide-in-container__button--position-1;
+    }
+    pre {
+        @extend %slide-in-container__content;
+    }
 
-        padding: 0 0 $padding-small;
-
-        &, & > pre {
-            @include center-absolute-x($position: fixed);
-        }
-
-        button, pre {            
-            font-family: $font-family-mono;
-            font-size: 1.1rem;
-        }
-        button {
-            @include transition($speed: $speed-fast);
-            display: block;
-            width: 100%;
-            height: 2.5rem;
-
-            background-color: $color-border;
-            border: none;
-            color: $color-lighter-background;
-
-            opacity: .2;
-
-            cursor: pointer;
-
-            &:hover {
-                opacity: 1;
-            }
-        }
-        pre {
-            @include transition($speed: $speed-medium);
-            transform: translate(-50%, 200%);
-            opacity: 0;
-
-            bottom: 3rem;
-            height: 50vh;
-            width: $container-width;
-            z-index: 19;
-
-            margin: 0;
-            padding: $padding-large $padding-medium;
-
-            overflow: auto;
-
-            background-color: $color-lighter-background;
-        }
-        &.active {
-            button, pre {
-                opacity: 1;
-            }
-            pre {
-                box-shadow: 0 -5px 15px rgba($color-text, .2);
-                transform: translate(-50%, 0);
-            }
-        }
+    &, button, pre {
+        background-color: $color-text;
+        color: $color-background;
     }
 }
 

@@ -1,7 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
 
-import { rword } from 'rword';
-
 export default class DataService {
     private readonly _axios: AxiosInstance;
 
@@ -21,6 +19,6 @@ export default class DataService {
     }
 
     public generateName(): string {
-        return rword.generate(1, { length: '5-10' } ) as string;
+        return '';
     }
 }

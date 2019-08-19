@@ -20,7 +20,7 @@
       </div>
       
       <button class="show-aside-button" @click="toggleActive">
-        <i :class="`fa fa-arrow-${isActive ? 'right' : 'left'}`"></i>
+        <i class="fa fa-cogs"></i>
       </button>
     </aside>
 </template>
@@ -62,6 +62,3 @@ export default class Config extends Vue {
 }
 </script>
 
-<style lang="scss">
-    @import '../scss/components/config';
-</style>

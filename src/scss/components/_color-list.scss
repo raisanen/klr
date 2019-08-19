@@ -1,0 +1,20 @@
+.colors {
+    @extend %flex-row;
+
+    margin: 0 -($gutter-width/2);
+    width: 100%;
+
+    .color {
+        transition: all .5s;
+        margin: 0 ($gutter-width/2);
+        height: 175px;
+        margin-bottom: $margin-large;
+
+        flex-basis: 20%;
+        max-width: 20%;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+    }
+}

@@ -1,73 +1,18 @@
-@import '../common';
-
 aside {
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-
-    width: $container-width;
-    min-width: 40vw;
-    max-width: 80vw;
-    z-index: 11;
-
-    padding: $padding-small $padding-small $padding-large;
-
-    transform: translateX(100%);
-    transition: all .5s ease-in-out;
-
-    background-color: $color-border;
-
-    .show-aside-button,
-    .form {
-        box-sizing: border-box;
-        box-shadow: -5px 2px 5px rgba($color-text, .3);
-    }
+    @extend %slide-in-container;
 
     .show-aside-button {
-        transition: all .3s ease-in-out;
-        position: absolute;
-        left: 0;
-        top: 50%;
-
-        width: 40px;
-        height: 60px;
-        z-index: 10;
-
-        transform: translate(-100%, -50%);
-
-        border: none;
-        background-color: $color-border;
-        color: $color-background;
-
-        cursor: pointer;
-
-        &:hover {
-            width: 60px;
-        }
-
-        &:focus {
-            outline: none;
-        }
+        @extend %slide-in-container__button;
+        @extend %slide-in-container__button--position-2;
     }
 
     .form {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: $padding-small $padding-small $padding-large;
-
-        overflow-y: auto;
+        @extend %slide-in-container__content;
 
         text-align: center;
 
         h2 {
-            font-size: 1.5rem;
-            font-weight: bold;
             margin: $margin-large 0 $margin-small;
-            text-align: center;
         }
 
         .colors,
@@ -76,14 +21,7 @@ aside {
         }
 
         .item-input {
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-            width: 100%;
-            margin: 0 auto;
+            @extend %flex-row;
             padding: $padding-small $padding-small $padding-small 2.5rem;
 
             .item-name {
@@ -159,13 +97,5 @@ aside {
             }
         }
 
-    }
-
-    &.active {
-        transform: translateX(0);
-
-        .show-aside-button {
-            height: 80px;
-        }
     }
 }
