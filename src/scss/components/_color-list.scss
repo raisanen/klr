@@ -1,13 +1,14 @@
 .colors {
     @extend %flex-row;
 
+    position: relative;
     margin: 0 -($gutter-width/2);
     width: 100%;
 
     .color {
         transition: all .5s;
         margin: 0 ($gutter-width/2);
-        height: 175px;
+        height: 150px;
         margin-bottom: $margin-large;
 
         flex-basis: 20%;
@@ -15,6 +16,24 @@
 
         &:hover {
             transform: translateY(-5px);
+        }
+        &.add-color-button {
+            position: absolute;
+            top: 0;
+            right: -2rem;
+            cursor: pointer;
+            flex-basis: 1rem;
+            width: 2rem;
+            opacity: .2;
+            border: none;
+
+            background-color: $color-text;
+            color: $color-background;
+            font-size: 1.5rem;
+
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 }

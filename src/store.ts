@@ -118,12 +118,12 @@ export default new Vuex.Store<KlrState>({
   },
   actions: {
     addFonts(_, payload: INullableFont[] | INullableFont) {
-      const fonts: Font[] = ensureArray(payload).map((p) => new Font(p));
+      const fonts: Font[] = ensureArray(payload).map((p) => new Font({ ...p, id: null }));
       this.commit('add', { fonts });
       this.commit('resetActiveColors');
     },
     addColors(_, payload: INullableColor[] | INullableColor) {
-      const colors: Color[] = ensureArray(payload).map((p) => new Color(p));
+      const colors: Color[] = ensureArray(payload).map((p) => new Color({ ...p, id: null }));
       this.commit('add', { colors });
       this.commit('resetActiveColors');
     },
