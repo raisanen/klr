@@ -20,14 +20,19 @@ export class KlrService {
         return this.load<IColor>('klr-colors').map((c: IColor) => new Color(c));
     }
 
-    public addFonts(...fonts: Font[]): void {
+    public async addFonts(...fonts: Font[]): Promise<void> {
         const fontsToLoad = fonts.map((f) => f.family).filter((f) => !this.loaded[f]);
         if (fontsToLoad.length > 0) {
-            WebFontLoader.load({
-                google: { families: fontsToLoad },
+            fontsToLoad.forEach((f) => this.loaded[f] = true);
+            return new Promise((resolve, reject) => {
+                WebFontLoader.load({
+                    google: { families: fontsToLoad },
+                    active: () => resolve(),
+                    inactive: () => reject(),
+                });
             });
-            fontsToLoad.forEach((f) => this.loaded[f] = true);    
         }
+        return Promise.resolve();
     }
 
     protected save<T extends IStyleable>(key: string, items: T[]): void {

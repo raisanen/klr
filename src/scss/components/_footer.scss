@@ -1,0 +1,14 @@
+@import '../common';
+
+footer {
+    @extend %flex-container;
+
+    padding: $padding-medium 0 $padding-large;
+
+    a {
+        @extend %klrized;
+        color: $color-text;
+        text-decoration: none;
+    }
+}
+

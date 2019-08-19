@@ -17,7 +17,12 @@ $color-border: #abc;
 $color-highlight: #0af;
 
 $font-family: 'DM Sans', sans-serif;
+$font-family-mono: 'Cutive Mono', monospace;
 $font-size: 18px;
+
+$speed-fast: .3s;
+$speed-medium: .6s;
+$speed-slow: .8s;
 
 @mixin container {
     width: $container-width;
@@ -30,8 +35,58 @@ $font-size: 18px;
         @content;
     }
 }
+
 @mixin desktop-only {
     @media (min-width: $mobile-width + 1) {
         @content;
+    }
+}
+
+@mixin flex($display: flex, $direction: row, $justify: center, $align: center, $wrap: wrap) {
+    display: $display;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin transition($elements: all, $speed: $speed-medium, $timing: ease-in-out) {
+    transition: $elements $speed $timing;
+}
+
+@mixin center-absolute($position: absolute) {
+    position: $position;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+@mixin center-absolute-x($position: absolute) {
+    position: $position;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@mixin center-absolute-y($position: absolute) {
+    position: $position;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+%flex-container {
+    @include container;
+    @include flex($direction: column);
+}
+
+%klrized {
+    &>span {
+        &:first-child {
+            color: $color-border;
+        }
+
+        &:last-child {
+            color: $color-highlight
+        }
     }
 }

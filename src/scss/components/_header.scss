@@ -1,0 +1,14 @@
+@import '../common';
+
+header {
+    @extend %flex-container;
+
+    h1 {
+        @extend %klrized;
+        
+        font-size: 3rem;
+        font-weight: bold;
+        text-align: center;
+        margin: 0;
+    }
+}

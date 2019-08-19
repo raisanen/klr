@@ -16,6 +16,8 @@ export interface KlrState {
   colors: Color[];
   userKey: string;
   activeColors: Color[];
+
+  loading: boolean;
 }
 
 export const defaultState: KlrState = {
@@ -26,7 +28,9 @@ export const defaultState: KlrState = {
   ],
   colors: [Color.fromString('#222'), Color.fromString('#abc'), Color.fromString('#0af')],
   userKey: null,
-  activeColors: [Color.fromString('#222'), Color.fromString('#abc')]
+  activeColors: [Color.fromString('#222'), Color.fromString('#abc')],
+
+  loading: false
 };
 
 const ensureArray = <T>(val: T | T[]): T[] => Array.isArray(val) ? val : [val];
@@ -47,6 +51,7 @@ export interface UpdatePayload {
 export default new Vuex.Store<KlrState>({
   state: defaultState,
   getters: {
+    loading: (state) => state.loading,
     colors: (state) => state.colors,
     fonts: (state) => state.fonts,
     userKey: (state) => state.userKey,
@@ -100,6 +105,10 @@ export default new Vuex.Store<KlrState>({
       state.fonts = remove(state.fonts, payload.fonts || []);
       state.colors = remove(state.colors, payload.colors || []);
     },
+
+    loading(state, isLoading: boolean) {
+      state.loading = isLoading;
+    }
   },
   actions: {
     addFonts(_, payload: INullableFont[] | INullableFont) {
@@ -124,8 +133,10 @@ export default new Vuex.Store<KlrState>({
       service.saveColors(state.getters.colors);
       service.saveFonts(state.getters.fonts);
     },
-    loadFonts(state) {
-      service.addFonts(...state.getters.fonts);
+    async loadFonts(state) {
+      this.commit('loading', true);
+      await service.addFonts(...state.getters.fonts);
+      this.commit('loading', false);
     }
   },
 });

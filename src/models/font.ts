@@ -51,7 +51,7 @@ export class Font extends Styleable implements IFont {
 
     public toStyle(): { [key: string]: string; } {
         return {
-            'font-family': this.family,
+            'font-family': `'${this.family}'`,
             'font-weight': this.weight,
             'font-style': this.style,
             'font-size': this.size,

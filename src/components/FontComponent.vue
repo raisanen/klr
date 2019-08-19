@@ -26,10 +26,3 @@ export default class FontComponent extends Vue {
 }
 </script>
 
-<style lang="scss">
-    @import '../scss/common';
-
-    .font {
-        margin: $margin-medium auto;
-    }
-</style>

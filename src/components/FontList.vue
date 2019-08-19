@@ -26,13 +26,3 @@ export default class FontList extends Vue {
     }
 }
 </script>
-
-<style lang="scss">
-    .fonts {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-    }
-</style>
