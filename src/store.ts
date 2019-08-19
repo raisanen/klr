@@ -1,15 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { KlrService } from '@/services/klr.service';
+import FontService from '@/services/font.service';
+import DataService from '@/services/data.service';
 
 import { Styleable } from '@/models/stylable';
 import { Color, INullableColor, IColor } from '@/models/color';
 import { Font, INullableFont, IFont } from '@/models/font';
+import { ConfigDto } from '@/models/config-dto';
 
 Vue.use(Vuex);
 
-const service = new KlrService();
+const fontService = new FontService();
+const dataService = new DataService();
 
 export interface KlrState {
   fonts: Font[];
@@ -105,6 +108,10 @@ export default new Vuex.Store<KlrState>({
       state.fonts = remove(state.fonts, payload.fonts || []);
       state.colors = remove(state.colors, payload.colors || []);
     },
+    update(state, payload: UpdatePayload) {
+      state.fonts = [...(payload.fonts || [])];
+      state.colors = [...(payload.colors || [])];
+    },
 
     loading(state, isLoading: boolean) {
       state.loading = isLoading;
@@ -129,13 +136,27 @@ export default new Vuex.Store<KlrState>({
       this.commit('remove', { colors: ensureArray(colors) });
       this.commit('resetActiveColors');
     },
-    save(state) {
-      service.saveColors(state.getters.colors);
-      service.saveFonts(state.getters.fonts);
+    async save(state) {
+      const name = state.getters.userKey;
+      const dto = <ConfigDto> {
+        fonts: state.getters.fonts,
+        colors: state.getters.colors,
+      };
+      this.commit('loading', true);
+      await dataService.save(name, dto);
+      this.commit('loading', false);
+    },
+    async load(state) {
+      const name = state.getters.userKey;
+      this.commit('loading', true);
+      const dto = await dataService.load<ConfigDto>(name);
+      this.commit('udpate', dto);
+      this.commit('loading', false);
     },
     async loadFonts(state) {
       this.commit('loading', true);
-      await service.addFonts(...state.getters.fonts);
+      await fontService.load(...state.getters.fonts);
+      this.commit('fonts')
       this.commit('loading', false);
     }
   },
