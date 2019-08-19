@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import FontService from '@/services/font.service';
 import DataService from '@/services/data.service';
+import FontService from '@/services/font.service';
 
 import { Styleable } from '@/models/stylable';
 import { Color, INullableColor, IColor } from '@/models/color';
@@ -11,8 +11,8 @@ import { ConfigDto } from '@/models/config-dto';
 
 Vue.use(Vuex);
 
-const fontService = new FontService();
 const dataService = new DataService();
+const fontService = new FontService();
 
 export interface KlrState {
   fonts: Font[];
@@ -25,9 +25,9 @@ export interface KlrState {
 
 export const defaultState: KlrState = {
   fonts: [
-    new Font({ family: 'Quicksand', size: '50px', weight: 'bold',  text: 'Heading - level 1' }),
+    new Font({ family: 'Quicksand', size: '56px', weight: 'bold',  text: 'Heading - level 1' }),
     new Font({ family: 'Quicksand', size: '32px', weight: 'bold',  text: 'Heading - level 2' }),
-    new Font({ family: 'DM Serif', size: '20px', text: 'Paragraph text'})
+    new Font({ family: 'DM Serif', size: '24px', text: 'Paragraph text'})
   ],
   colors: [Color.fromString('#222'), Color.fromString('#abc'), Color.fromString('#0af')],
   userKey: null,
@@ -108,9 +108,9 @@ export default new Vuex.Store<KlrState>({
       state.fonts = remove(state.fonts, payload.fonts || []);
       state.colors = remove(state.colors, payload.colors || []);
     },
-    update(state, payload: UpdatePayload) {
-      state.fonts = [...(payload.fonts || [])];
-      state.colors = [...(payload.colors || [])];
+    load(state, payload: ConfigDto) {
+      state.fonts = [...(payload.fonts || []).map((f) => new Font(f))];
+      state.colors = [...(payload.colors || []).map((c) => new Color(c))];
     },
 
     loading(state, isLoading: boolean) {
