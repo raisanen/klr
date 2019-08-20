@@ -1,9 +1,13 @@
 <template>
-    <div :class="`colors colors-${numColors}`" v-if="numColors > 0">
-        <ColorComponent v-for="(color, index) in colors" :key="color.id" :color="color" :index="index"/>
-        <button class="color add-color-button" @click="addColor">
+    <div class="row color-list" v-if="numColors > 0">
+        <div class="col col-4" v-for="(color, index) in colors" :key="color.id">
+            <ColorComponent :color="color" :index="index"/>
+        </div>
+        <button class="color-list__add-button" @click="addColor">
             <i class="fa fa-plus-circle"></i>
+            <span>Add</span>
         </button>
+        <ColorInput/>
     </div>
 </template>
 
@@ -15,9 +19,12 @@ import { Component } from 'vue-property-decorator';
 import ColorComponent from '@/components/ColorComponent.vue';
 import { Color } from '@/models/color';
 
+const ColorInput = () => import(/* webpackChunkName: "component-colorinput" */ '@/components/ColorInput.vue');
+
 @Component({
     components: {
-        ColorComponent
+        ColorComponent,
+        ColorInput
     }
 })
 export default class ColorList extends Vue {
@@ -34,6 +41,5 @@ export default class ColorList extends Vue {
     protected addColor(): void {
         this.$store.dispatch('addColors', this.newColor);
     }
-
 }
 </script>

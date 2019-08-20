@@ -1,0 +1,22 @@
+.code-example {
+    @extend %slide-in-container;
+    background: $color-text;
+    color: $color-lighter-background;
+
+    &__content {
+        @extend %slide-in-container__content;
+        pre {
+            font-size: 1rem;
+        }
+    }
+    &__button {
+        @extend %slide-in-container__button;
+        @extend %slide-in-container__button--position-1;
+        @extend %tooltip-container;
+
+        span {
+            @extend %tooltip;
+            @extend %tooltip--left;
+        }
+    }
+}

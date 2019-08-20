@@ -2,10 +2,12 @@
   <article class="home">
     <Header/>
 
-    <Preview/>
+    <main>
+      <ColorList/>
+      <FontList/>
+    </main>
 
-    <Config/>
-
+    <CodeExample/>
     <Footer/>
   </article>
 </template>
@@ -20,15 +22,17 @@ import { setInterval } from 'timers';
 
 import Header from '@/components/Header.vue';
 
-const Config = () => import(/* webpackChunkName: "component-config" */ '@/components/Config.vue');
-const Preview = () => import(/* webpackChunkName: "component-preview" */ '@/components/Preview.vue');
+const ColorList = () => import(/* webpackChunkName: "component-color-list" */ '@/components/ColorList.vue');
+const FontList = () => import(/* webpackChunkName: "component-font-list" */ '@/components/FontList.vue');
 const Footer = () => import(/* webpackChunkName: "component-footer" */ '@/components/Footer.vue');
+const CodeExample = () => import(/* webpackChunkName: "component-code-example" */ '@/components/CodeExample.vue');
 
 @Component({
   components: {
     Header,
-    Preview,
-    Config,
+    ColorList,
+    FontList,
+    CodeExample,
     Footer
   },
 })

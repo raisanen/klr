@@ -14,26 +14,41 @@ Vue.use(Vuex);
 const dataService = new DataService();
 const fontService = new FontService();
 
+export interface ActiveColors {
+  foreground: Color;
+  background: Color;
+  highlight: Color;
+}
+export interface Editing {
+  colorId?: string;
+  fontId?: string;
+}
+
 export interface KlrState {
   fonts: Font[];
   colors: Color[];
   userKey: string;
-  activeColors: Color[];
-
+  activeColors: ActiveColors;
   loading: boolean;
+  editing: Editing;
 }
 
+const defaultColors = [Color.fromString('#222'), Color.fromString('#abc'), Color.fromString('#0af')];
 export const defaultState: KlrState = {
   fonts: [
     new Font({ family: 'Quicksand', size: '56px', weight: 'bold',  text: 'Heading - level 1' }),
     new Font({ family: 'Quicksand', size: '32px', weight: 'bold',  text: 'Heading - level 2' }),
     new Font({ family: 'Bitter', size: '24px', text: 'Paragraph text'})
   ],
-  colors: [Color.fromString('#222'), Color.fromString('#abc'), Color.fromString('#0af')],
+  colors: defaultColors,
   userKey: null,
-  activeColors: [Color.fromString('#222'), Color.fromString('#abc')],
-
-  loading: false
+  activeColors: {
+    background: defaultColors[0],
+    foreground: defaultColors[1],
+    highlight: defaultColors[2]
+  },
+  loading: false,
+  editing: {}
 };
 
 const ensureArray = <T>(val: T | T[]): T[] => Array.isArray(val) ? val : [val];
@@ -48,17 +63,21 @@ export interface UpdatePayload {
   fonts?: Font[];
   colors?: Color[];
   userKey?: string;
-  activeColors?: Color[];
+  activeColors?: ActiveColors;
 }
 
 export default new Vuex.Store<KlrState>({
   state: defaultState,
   getters: {
+    editingColor: (state) => state.editing.colorId ? state.colors.find((c) => c.id === state.editing.colorId) : null,
+    editingFont: (state) => state.editing.fontId ? state.fonts.find((c) => c.id === state.editing.fontId) : null,
+    activeBackground: (state) => state.activeColors.background,
+    activeForeground: (state) => state.activeColors.foreground,
     loading: (state) => state.loading,
     colors: (state) => state.colors,
     fonts: (state) => state.fonts,
     userKey: (state) => state.userKey,
-    activeColors: (state) => [...state.activeColors, ...state.colors].slice(0, 2),
+    activeColors: (state) => state.activeColors,
     googleFontsUrl: (state) => {
       const fonts: {[key: string]: string[]} = {};
       state.fonts.forEach((f) => {
@@ -75,26 +94,33 @@ export default new Vuex.Store<KlrState>({
     },
   },
   mutations: {
-    addActiveColor(state, color: Color) {
-      if (state.activeColors.find((c) => c.id === color.id)) {
-        state.activeColors = [...state.activeColors.reverse()];
-      } else {
-        state.activeColors = [
-          color,
-          ...state.activeColors
-        ].slice(0, 2);  
-      }
+    editFont(state, fontId: string) {
+      state.editing = {
+        colorId: null,
+        fontId
+      };
     },
-    flipActiveColors(state) {
-      state.activeColors = [...state.activeColors.reverse()];
+    editColor(state, colorId: string) {
+      state.editing = {
+        fontId: null,
+        colorId
+      };    },
+    setActiveForeground(state, foreground: Color) {
+      state.activeColors = {
+        ...state.activeColors,
+        foreground
+      };
     },
-    resetActiveColors(state) {
-      state.activeColors = [...state.colors].slice(0, 2);
+    setActiveBackground(state, background: Color) {
+      state.activeColors = {
+        ...state.activeColors,
+        background
+      };
     },
-    init(state, payload: UpdatePayload) {
-      state = {
-        ...state,
-        ...payload,
+    setActiveHighlight(state, color: Color) {
+      state.activeColors = {
+        ...state.activeColors,
+        highlight: color
       };
     },
     clear(state) {
@@ -117,23 +143,41 @@ export default new Vuex.Store<KlrState>({
     }
   },
   actions: {
+    editColor(_, color: IColor | string) {
+      const colorId = typeof color === 'string' || !color ? color : color.id;
+      this.commit('editColor', null);
+      setTimeout(() => {
+        this.commit('editColor', colorId);  
+      }, 50);
+    },
+    editFont(_, font: IFont | string) {
+      const fontId = typeof font === 'string' || !font ? font : font.id;
+      this.commit('editColor', null);
+      setTimeout(() => {
+        this.commit('editFont', fontId);  
+      }, 50);
+    },
+    setActive(_, payload: { foreground?: IColor; background?: IColor; }) {
+      if (payload.foreground) {
+        this.commit('setActiveForeground', new Color({...payload.foreground}));
+      }
+      if (payload.background) {
+        this.commit('setActiveBackground', new Color({...payload.background}));
+      }
+    },
     addFonts(_, payload: INullableFont[] | INullableFont) {
       const fonts: Font[] = ensureArray(payload).map((p) => new Font({ ...p, id: null }));
       this.commit('add', { fonts });
-      this.commit('resetActiveColors');
     },
     addColors(_, payload: INullableColor[] | INullableColor) {
       const colors: Color[] = ensureArray(payload).map((p) => new Color({ ...p, id: null }));
       this.commit('add', { colors });
-      this.commit('resetActiveColors');
     },
     removeFonts(_, fonts: IFont[]|IFont) {
       this.commit('remove', { fonts: ensureArray(fonts) });
-      this.commit('resetActiveColors');
     },
     removeColors(_, colors: IColor[]|IColor) {
       this.commit('remove', { colors: ensureArray(colors) });
-      this.commit('resetActiveColors');
     },
     async save(state) {
       const name = state.getters.userKey;
@@ -150,7 +194,6 @@ export default new Vuex.Store<KlrState>({
       this.commit('loading', true);
       const dto = await dataService.load<ConfigDto>(name);
       this.commit('load', dto);
-      this.commit('resetActiveColors');
       this.commit('loading', false);
     },
     async loadFonts(state) {

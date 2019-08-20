@@ -1,0 +1,74 @@
+.item-input {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    max-width: 90vh;
+    max-height: 90vh;
+
+    transform: translate(-50%, -50%);
+
+    padding: $margin-large;
+
+    background-color: $color-background;
+    box-shadow: 0 0 15px rgba($color-text, .2);
+    opacity: 1;
+
+    z-index: 999;
+    animation: slideInCentered $speed-fast ease-in-out 1;
+
+    label {
+        font-size: 1.2rem;
+        font-family: $font-family;
+        margin-bottom: $margin-medium;
+
+        > span {
+            display: block;
+            width: 100%;
+
+            font-size: .8rem;
+            color: $color-text;
+
+            > span {
+                color: $color-border;
+            }
+        }
+        input, select, button, option {
+            font-size: inherit;
+            font-family: inherit;
+            width: 100%;
+            border: 1px solid $color-lighter-background;
+            background-color: $color-lighter-background;
+            color: $color-text;
+            padding: $padding-small $padding-medium;
+
+            &.invalid {
+                border: 1px solid #f00;
+            }
+        }
+    }
+
+    &__help-button {
+        @extend %tooltip-container;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 35px;
+        height: 35px;
+        background-color: $color-border;
+        color: $color-lighter-background;
+        text-shadow: none;
+        font-size: 1rem;
+        font-weight: normal;
+        transform: translateY(-50%);
+        span {
+            @extend %tooltip;
+        }
+    }
+
+    &__close-button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+}

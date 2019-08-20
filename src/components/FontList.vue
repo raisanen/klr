@@ -1,6 +1,13 @@
 <template>
-    <div :class="`fonts fonts-${numFonts}`" v-if="numFonts > 0">
-        <FontComponent v-for="(font, index) in fonts" :key="font.id" :font="font" :index="index"/>
+    <div class="row font-list" v-if="numFonts > 0">
+        <div class="col col-12" v-for="(font, index) in fonts" :key="font.id">
+            <FontComponent :font="font" :index="index"/>
+        </div>
+        <button class="font-list__add-button">
+            <i class="fa fa-plus-circle"></i>
+            <span>Add</span>
+        </button>
+        <FontInput/>
     </div>
 </template>
 
@@ -13,8 +20,11 @@ import FontComponent from '@/components/FontComponent.vue';
 import { Color } from '@/models/color';
 import { Font } from '../models/font';
 
+const FontInput = () => import(/* webpackChunkName: "component-fontinput" */ '@/components/FontInput.vue');
+
 @Component({
     components: {
+        FontInput,
         FontComponent
     }
 })

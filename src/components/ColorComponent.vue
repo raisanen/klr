@@ -1,7 +1,25 @@
 <template>
-    <div class="color item" :class="{active: isActive}" :style="style" @click="addActive">
-        <span class="index">{{index + 1}}</span>
-        <span class="description">{{color.toText()}}</span>
+    <div class="color-list__color" :style="style">
+        <div class="color-list__color__index">{{index + 1}}</div>
+        <div class="color-list__color__description">{{color.toText()}}</div>
+        <div class="color-list__color__controls">
+            <button @click="setFg">
+                <i class="fa fa-level-up"></i>
+                <span>Foreground</span>
+            </button>
+            <button @click="setBg">
+                <i class="fa fa-level-down"></i>
+                <span>Background</span>
+            </button>
+            <button @click="edit">
+                <i class="fa fa-edit"></i>
+                <span>Edit</span>
+            </button>
+            <button class="warn" @click="remove">
+                <i class="fa fa-trash"></i>
+                <span>Remove</span>
+            </button>
+        </div>
     </div>
 </template>
 
@@ -13,20 +31,27 @@ import { Getter } from 'vuex-class';
 
 @Component
 export default class ColorComponent extends Vue {
-    @Getter protected activeColors!: Color[];
     @Prop() protected color!: Color;
     @Prop() protected index!: number;
-
-    protected get isActive(): boolean {
-        return this.activeColors.findIndex((c) => c.id === this.color.id) >= 0;
-    }
-
-    protected addActive(): void {
-        this.$store.commit('addActiveColor', this.color);
-    }
 
     protected get style(): any {
         return this.color ? this.color.toStyle() : {};
     }
+
+    protected edit(): void {
+        this.$store.dispatch('editColor', this.color);
+    }
+
+    protected setFg(): void {
+        this.$store.dispatch('setActive', {foreground: this.color});
+    }
+    protected setBg(): void {
+        this.$store.dispatch('setActive', {background: this.color});
+    }
+
+    protected remove(): void {
+        this.$store.dispatch('removeColors', this.color);
+    }
+
 }
 </script>

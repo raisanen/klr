@@ -1,0 +1,45 @@
+.font-list {
+    @extend %item-list;
+
+    &__font {
+        @extend %item;
+        margin-left: 60px;
+
+        &__controls,
+        &__description,
+        &__index {
+            @extend %item__meta;
+            @extend %item__meta--left;
+        }
+
+        &__controls {
+            @extend %flex-column;
+            @extend %item__meta--center-y;
+            @extend %item__meta--hidden;
+
+            left: -40px;
+            width: 30px;
+            height: 150px;
+
+            button {
+                @extend %tooltip-container;
+                span {
+                    @extend %tooltip;
+                    @extend %tooltip--inverted;
+                }
+            }
+        }
+
+        &__description {
+            @extend %item__meta--bottom;
+        }
+
+        &__index {
+            @extend %item__meta--top;
+        }
+    }
+    
+    &__add-button {
+        @extend %item-list__add-button;
+    }
+}

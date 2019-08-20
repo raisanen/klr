@@ -1,0 +1,24 @@
+$gutter: $gutter-width / 2;
+@mixin max-w($w) {
+    max-width: $w;
+    flex-basis: $w;
+}
+.row {
+    @extend %flex-row;
+    
+    width: 100%;
+    margin-left: -$gutter;
+    margin-right: -$gutter;
+
+    .col {
+        padding-left: $gutter;
+        padding-right: $gutter;
+        @include max-w(100%);
+
+        @for $n from 1 through $columns {
+            &.col-#{$n} {
+                @include max-w(percentage(1 / $columns) * $n);
+            }
+        }    
+    }
+}

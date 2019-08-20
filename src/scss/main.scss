@@ -1,40 +1,22 @@
-$container-width: 1200px;
-$mobile-width: 600px;
-$gutter-width: 30px;
-
-$margin-small: 10px;
-$margin-medium: 20px;
-$margin-large: 40px;
-
-$padding-small: 5px;
-$padding-medium: 15px;
-$padding-large: 30px;
-
-$color-background: #e8e9ea;
-$color-lighter-background: #fcfeff;
-$color-text: #222;
-$color-border: #abc;
-$color-highlight: #0af;
-
-$font-family: 'DM Sans', sans-serif;
-$font-family-mono: 'Cutive Mono', monospace;
-$font-size: 18px;
-
-$speed-fast: .3s;
-$speed-medium: .6s;
-$speed-slow: .8s;
-
 @import
     'abstracts/variables',
     'abstracts/mixins',
-    'abstracts/placeholders';
+    'abstracts/placeholders',
+    'abstracts/animations';
 
 @import
-    'layout/base';
+    'base/base',
+    'base/typography';
+
+@import
+    'layout/grid',
+    'layout/app',
+    'layout/header',
+    'layout/footer';
 
 @import 
-    'components/header',
-    'components/footer',
-    'components/config',
-    'components/preview',
-    'components/color-list';
+    'components/buttons',
+    'components/color',
+    'components/font',
+    'components/code-example',
+    'components/form';

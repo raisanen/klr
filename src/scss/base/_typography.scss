@@ -1,0 +1,22 @@
+body, input, select, button, option, h1, h2, h3 {
+  font-family: $font-family;    
+}
+pre, code {
+  font-family: $font-family-mono;
+}
+
+
+h1,
+h2,
+h3 {
+  font-weight: bold;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}

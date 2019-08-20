@@ -1,0 +1,40 @@
+.color-list {
+    @extend %item-list;
+
+    &__color {
+        @extend %item;
+        height: 145px;
+
+        &__index, &__description, &__controls {
+            @extend %item__meta;
+        }
+        &__index, &__description {
+            @extend %item__meta--center-x;
+        }
+        &__description {
+            @extend %item__meta--bottom;
+        }
+        &__index {
+            @extend %item__meta--top;
+        }
+        &__controls {
+            @extend %flex-row;            
+            @extend %item__buttons;
+            @extend %item__meta--hidden;
+            @extend %item__meta--center;
+
+            width: 100%;
+
+            button {
+                @extend %tooltip-container;
+                span {
+                    @extend %tooltip;
+                    @extend %tooltip--above;
+                }
+            }
+        }
+    }
+    &__add-button {
+        @extend %item-list__add-button;
+    }
+}
