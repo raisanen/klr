@@ -1,5 +1,4 @@
 <template>
-<main>
     <div class="code-example" :class="{active: show}">
         <div class="code-example__content">
             <pre>{{codeExample}}</pre>
@@ -9,7 +8,6 @@
             <span>Example code</span>
         </button>
     </div>
-</main>
 </template>
 
 <script lang="ts">

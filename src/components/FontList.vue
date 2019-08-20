@@ -3,7 +3,7 @@
         <div class="col col-12" v-for="(font, index) in fonts" :key="font.id">
             <FontComponent :font="font" :index="index"/>
         </div>
-        <button class="font-list__add-button">
+        <button class="font-list__add-button" @click="addFont">
             <i class="fa fa-plus-circle"></i>
             <span>Add</span>
         </button>
@@ -33,6 +33,14 @@ export default class FontList extends Vue {
 
     protected get numFonts(): number {
         return (this.fonts || []).length;
+    }
+
+    protected get newFont(): Font {
+        return this.fonts.length > 0 ? this.fonts[this.fonts.length - 1] : new Font();
+    }
+
+    protected addFont(): void {
+        this.$store.dispatch('addFonts', this.newFont);
     }
 }
 </script>

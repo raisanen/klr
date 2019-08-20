@@ -1,12 +1,16 @@
 $gutter: $gutter-width / 2;
+$one-col: percentage(1 / $columns);
 @mixin max-w($w) {
     max-width: $w;
     flex-basis: $w;
 }
+.container {
+    width: $container-width;
+    max-width: 95%;
+    margin: 0 auto;
+}
 .row {
-    @extend %flex-row;
-    
-    width: 100%;
+    @extend %flex-row;    
     margin-left: -$gutter;
     margin-right: -$gutter;
 
@@ -17,7 +21,17 @@ $gutter: $gutter-width / 2;
 
         @for $n from 1 through $columns {
             &.col-#{$n} {
-                @include max-w(percentage(1 / $columns) * $n);
+                @include max-w($one-col * $n);
+
+                @if $n < 7 {
+                    @include mobile-only {
+                        @include max-w($one-col * ($n * 2));
+                    }    
+                } @else {
+                    @include mobile-only {
+                        @include max-w(100%);
+                    }
+                }
             }
         }    
     }

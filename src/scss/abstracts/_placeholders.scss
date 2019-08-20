@@ -141,10 +141,13 @@ $item-meta-height: 20px;
         span {
             @extend %tooltip;
             @extend %tooltip--inverted;
+            @extend %tooltip--left;
         }
     }
 } 
 %item {
+    animation: growIn $speed-fast ease-in-out 1;
+
     &__meta {
         @include transition($speed: $speed-fast);
         position: absolute;

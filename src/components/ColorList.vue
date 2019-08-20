@@ -1,6 +1,6 @@
 <template>
     <div class="row color-list" v-if="numColors > 0">
-        <div class="col col-4" v-for="(color, index) in colors" :key="color.id">
+        <div :class="`col col-${columnWidth}`" v-for="(color, index) in colors" :key="color.id">
             <ColorComponent :color="color" :index="index"/>
         </div>
         <button class="color-list__add-button" @click="addColor">
@@ -32,6 +32,10 @@ export default class ColorList extends Vue {
 
     protected get numColors(): number {
         return (this.colors || []).length;
+    }
+
+    protected get columnWidth(): number {
+        return Math.max(3, Math.floor(12 / this.numColors));
     }
 
     protected get newColor(): Color {
