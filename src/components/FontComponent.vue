@@ -1,8 +1,5 @@
 <template>
     <div class="font-list__font" :style="style">
-        <div class="font-list__font__index">
-            {{index + 1}}
-        </div>
         <div class="font-list__font__description">
             {{font.toText()}}
         </div>

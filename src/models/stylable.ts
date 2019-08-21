@@ -26,7 +26,12 @@ export class Styleable implements IStyleable {
         return {};
     }
 
-    public update(config: INullableStyleable): void {
-        this.id = config.id ? config.id : this.id;
+    public update(config: INullableStyleable): this {
+        this.id = config.id || this.id;
+        return this;
+    }
+
+    public copy(): this {
+        return { ...this, id: uuid.v4() };
     }
 }

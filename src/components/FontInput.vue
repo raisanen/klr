@@ -30,7 +30,7 @@
             </select>
         </label>
         <button class="item-input__close-button" @click="close">
-            <i class="fa fa-times"></i>
+            <i class="fa fa-times-circle"></i>
         </button>
     </div>
 </template>

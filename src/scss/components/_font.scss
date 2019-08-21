@@ -17,12 +17,15 @@
             @extend %item__meta--center-y;
             @extend %item__meta--hidden;
 
-            left: -40px;
+            left: -50px;
             width: 30px;
-            height: 150px;
+            height: 140px;
 
             button {
                 @extend %tooltip-container;
+                text-shadow: none;
+                font-size: 2rem;
+
                 span {
                     @extend %tooltip;
                     @extend %tooltip--inverted;
@@ -35,7 +38,7 @@
         }
 
         &__index {
-            @extend %item__meta--top;
+            top: -15px;
         }
     }
     

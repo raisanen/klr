@@ -1,14 +1,13 @@
 <template>
     <div class="color-list__color" :style="style">
-        <div class="color-list__color__index">{{index + 1}}</div>
         <div class="color-list__color__description">{{color.toText()}}</div>
         <div class="color-list__color__controls">
             <button @click="setFg">
-                <i class="fa fa-level-up"></i>
+                <i class="fa fa-angle-double-up"></i>
                 <span>Foreground</span>
             </button>
             <button @click="setBg">
-                <i class="fa fa-level-down"></i>
+                <i class="fa fa-angle-double-down"></i>
                 <span>Background</span>
             </button>
             <button @click="edit">

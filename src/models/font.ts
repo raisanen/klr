@@ -40,13 +40,15 @@ export class Font extends Styleable implements IFont {
         return [this.family, this.size, this.weight, this.style].filter((p) => p !== 'normal').join(', ');
     }
 
-    public update(config: INullableFont): void {
+    public update(config: INullableFont): this {
         super.update(config);
         this.text = config.text || this.text;
         this.family = config.family || this.family;
         this.weight = config.weight || this.weight;
         this.style = config.style || this.style;
         this.size = config.size || this.size;
+
+        return this;
     }
 
     public toStyle(): { [key: string]: string; } {

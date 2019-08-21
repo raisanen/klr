@@ -50,15 +50,17 @@
 
     &__help-button {
         @extend %tooltip-container;
+        display: inline-flex;
+        align-items: center;
         position: absolute;
         top: 50%;
         left: 0;
-        width: 35px;
+        width: 40px;
         height: 35px;
-        background-color: $color-border;
-        color: $color-lighter-background;
+        border: 1px solid $color-text;
+        background-color: transparent;
+        color: $color-text;
         text-shadow: none;
-        font-size: 1rem;
         font-weight: normal;
         transform: translateY(-50%);
         span {
@@ -70,5 +72,7 @@
         position: absolute;
         top: 5px;
         right: 5px;
+        text-shadow: none;
+        font-size: 2rem;
     }
 }

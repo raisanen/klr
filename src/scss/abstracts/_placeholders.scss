@@ -117,11 +117,11 @@
 }
 
 
-$item-meta-height: 20px;
+$item-meta-height: 30px;
 %item-list, %item {
     position: relative;
-    margin-top: $item-meta-height * 2;
-    margin-bottom: $item-meta-height * 2;
+    margin-top: $item-meta-height;
+    margin-bottom: $item-meta-height;
 }
 %item-list {
     margin-left: $item-meta-height * 2;
@@ -203,7 +203,7 @@ $item-meta-height: 20px;
     %tooltip {
         @include transition($speed: $speed-fast);
         display: block;
-
+        white-space: pre-line;
         position: absolute;
         top: 50%;
         right: 0;

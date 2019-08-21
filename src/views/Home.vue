@@ -5,9 +5,9 @@
     <main>
       <ColorList/>
       <FontList/>
+      <CodeExample/>
     </main>
 
-    <CodeExample/>
     <Footer/>
   </article>
 </template>
@@ -24,8 +24,8 @@ import Header from '@/components/Header.vue';
 
 const ColorList = () => import(/* webpackChunkName: "component-color-list" */ '@/components/ColorList.vue');
 const FontList = () => import(/* webpackChunkName: "component-font-list" */ '@/components/FontList.vue');
-const Footer = () => import(/* webpackChunkName: "component-footer" */ '@/components/Footer.vue');
 const CodeExample = () => import(/* webpackChunkName: "component-code-example" */ '@/components/CodeExample.vue');
+const Footer = () => import(/* webpackChunkName: "component-footer" */ '@/components/Footer.vue');
 
 @Component({
   components: {

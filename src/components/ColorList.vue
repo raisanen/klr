@@ -38,12 +38,8 @@ export default class ColorList extends Vue {
         return Math.max(3, Math.floor(12 / this.numColors));
     }
 
-    protected get newColor(): Color {
-        return this.colors.length > 0 ? this.colors[this.colors.length - 1] : new Color();
-    }
-
     protected addColor(): void {
-        this.$store.dispatch('addColors', this.newColor);
+        this.$store.dispatch('addColors', new Color());
     }
 }
 </script>

@@ -1,5 +1,10 @@
 <template>
     <div class="item-input row" v-if="editingColor !== null">
+        <button class="item-input__help-button" @click="hexShowing = !hexShowing">
+            <i class="fa fa-code"></i>
+            <span>Input as hex</span>
+        </button>
+
         <template v-if="hexShowing">
             <label class="col col-6" :class="{invalid: !hexValid}">
                 <span>hex <span>#abc <span>or</span> #aabbcc</span></span>
@@ -23,10 +28,6 @@
             </label>
         </template>
         <template v-else>
-            <button class="item-input__help-button" @click="showHex">
-                <i class="fa fa-hashtag"></i>
-                <span>Input as hex</span>
-            </button>
             <label class="col col-3">
                 <span>red <span>(0 &ndash; 255)</span></span>
                 <input type="number" v-model="editingColor.r" min="0" max="255">
@@ -45,7 +46,7 @@
             </label>
         </template>
         <button class="item-input__close-button" @click="close">
-            <i class="fa fa-times"></i>
+            <i class="fa fa-times-circle"></i>
         </button>
     </div>
 </template>

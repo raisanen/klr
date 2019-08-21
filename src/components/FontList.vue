@@ -36,7 +36,7 @@ export default class FontList extends Vue {
     }
 
     protected get newFont(): Font {
-        return this.fonts.length > 0 ? this.fonts[this.fonts.length - 1] : new Font();
+        return this.fonts.length > 0 ? this.fonts[this.fonts.length - 1].copy() : new Font();
     }
 
     protected addFont(): void {

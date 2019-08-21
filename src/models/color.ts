@@ -14,24 +14,41 @@ export interface INullableColor extends INullableStyleable {
     a?: number;
 }
 
+const randComponent = () => Math.ceil(Math.random() * 255);
+
+/*
+    xformrgb(mat,r,g,b,tr,tg,tb)
+    float mat[4][4];
+    float r,g,b;
+    float *tr,*tg,*tb;
+    {
+        *tr = r*mat[0][0] + g*mat[1][0] +
+		    b*mat[2][0] + mat[3][0];
+        *tg = r*mat[0][1] + g*mat[1][1] +
+		    b*mat[2][1] + mat[3][1];
+        *tb = r*mat[0][2] + g*mat[1][2] +
+		    b*mat[2][2] + mat[3][2];
+    }
+*/
+
+
 export class Color extends Styleable implements IColor {
     public static fromString(s: string): Color {
-        const base = { a: 1.0 };
-        const input = s.startsWith('#') && s.length === 4 
-            ? '#' + s.replace('#', '').split('').map((c) => `${c}${c}`).join('')
+        const input = s.startsWith('#') && s.length === 4
+            ? s.replace(/([a-f0-9])/gi, '$1$1')
             : s;
+
         const result = s.startsWith('#')
-            ? /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i.exec(input)
+            ? /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(input)
             : /^rgba?\((\d+),\s*,(\d+),\s*(\d+),?\s*(\d+\.?\d*)?\)$/.exec(input);
 
         return new Color({
-            ...base,
             ...(result ? {
                 r: parseInt(result[1], 16),
                 g: parseInt(result[2], 16),
                 b: parseInt(result[3], 16),
-                a: result.length > 4 ? parseInt(result[4], 16) : base.a,
-            } : null),
+                a: 1.0,
+            } : {}),
         });
     }
 
@@ -42,20 +59,22 @@ export class Color extends Styleable implements IColor {
 
     constructor(config?: INullableColor) {
         super(config);
+        this.r = randComponent();
+        this.g = randComponent();
+        this.b = randComponent();
+        this.a = 1.0;
 
         const opts = config || {};
-        this.r = opts.r || 0;
-        this.g = opts.g || 0;
-        this.b = opts.b || 0;
-        this.a = opts.a || 1.0;
+        this.update(opts);
     }
 
-    public update(config: INullableColor): void {
+    public update(config: INullableColor): this {
         super.update(config);
-        this.r = config.r || this.r;
-        this.g = config.g || this.g;
-        this.b = config.b || this.b;
-        this.a = config.a || this.a;
+        this.r = typeof config.r !== 'undefined' ? config.r : this.r;
+        this.g = typeof config.g !== 'undefined' ? config.g : this.g;
+        this.b = typeof config.b !== 'undefined' ? config.b : this.b;
+        this.a = typeof config.a !== 'undefined' ? config.a : this.a;
+        return this;
     }
 
     public toText(): string {
@@ -77,6 +96,6 @@ export class Color extends Styleable implements IColor {
 
     private componentToHex(n: number): string {
         const hex = n.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;      
+        return hex.length == 1 ? "0" + hex : hex;
     }
 }
